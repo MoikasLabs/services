@@ -223,8 +223,7 @@ export default function AnalyticsPage() {
                     </div>
                   ) : (
                     <X402Payment
-                      amount={analyticsServices.find((s) => s.id === selectedService)?.price?.split(' ')[0] || '10'}
-                      resource="/api/services/analytics"
+                      service="analytics"
                       onSuccess={handlePaymentSuccess}
                       buttonText={`Pay & Run`}
                     />

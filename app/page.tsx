@@ -1,6 +1,8 @@
 import Link from 'next/link';
-import { Brain, BarChart3, MessageSquare, Radar, ArrowRight, Zap, Shield, Coins, BadgePercent } from 'lucide-react';
+import { Brain, BarChart3, MessageSquare, Radar, ArrowRight, Zap, Shield } from 'lucide-react';
 import { Navigation } from './components/Navigation';
+import { TokenSelector } from './components/TokenSelector';
+import { SERVICE_PRICING, TREASURY_ADDRESS } from './lib/openfacilitator';
 
 export default function Home() {
   const services = [
@@ -9,10 +11,8 @@ export default function Home() {
       description: 'Pay-per-use AI-powered research. Submit your topic, pay with crypto, get comprehensive results.',
       icon: Brain,
       href: '/research',
-      features: ['TipTap Editor', 'Multi-Token', 'Instant Results'],
-      priceUSD: '$0.01',
-      priceToken: '1,000 tokens',
-      serviceId: 'ai-research',
+      features: ['TipTap Editor', 'x402 Payments', 'Instant Results'],
+      price: SERVICE_PRICING['ai-research'].usd,
     },
     {
       title: 'Moltlaunch Scanner',
@@ -20,9 +20,7 @@ export default function Home() {
       icon: Radar,
       href: '/moltlaunch-scanner',
       features: ['Live Network Data', 'Power Rankings', 'Treasury Health'],
-      priceUSD: '$0.05',
-      priceToken: '5,000 tokens',
-      serviceId: 'moltlaunch-scanner',
+      price: SERVICE_PRICING['moltlaunch-scanner'].usd,
     },
     {
       title: 'Analytics',
@@ -30,9 +28,7 @@ export default function Home() {
       icon: BarChart3,
       href: '/analytics',
       features: ['Real-time Processing', 'Interactive Charts', 'Export Reports'],
-      priceUSD: '$0.05',
-      priceToken: '5,000 tokens',
-      serviceId: 'analytics',
+      price: SERVICE_PRICING['analytics'].usd,
     },
     {
       title: 'Consulting',
@@ -40,134 +36,119 @@ export default function Home() {
       icon: MessageSquare,
       href: '/consulting',
       features: ['Live Sessions', 'Documentation', 'Follow-up Support'],
-      priceUSD: '$0.25',
-      priceToken: '25,000 tokens',
-      serviceId: 'consulting',
+      price: SERVICE_PRICING['consulting'].usd,
+    },
+    {
+      title: 'Security Audit',
+      description: 'Automated security scan of smart contracts with vulnerability report and recommendations.',
+      icon: Shield,
+      href: '/security-audit',
+      features: ['kobold-scan', 'Report Export', 'Auto-fix Suggestions'],
+      price: SERVICE_PRICING['security-audit'].usd,
+    },
+    {
+      title: 'Vault Setup',
+      description: 'SOPS + Age encrypted secrets vault setup with templates for all your API keys.',
+      icon: Zap,
+      href: '/vault-setup',
+      features: ['Encrypted Vault', 'SOPS Templates', 'CLI Scripts'],
+      price: SERVICE_PRICING['vault-setup'].usd,
     },
   ];
 
   return (
-    <div className="min-h-screen bg-shell-950 texture-grid">
+    <div className="min-h-screen bg-[#0a0a0f]">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative pt-20 pb-16 px-4 sm:px-6 lg:px-8">
+      <section className="pt-20 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-crab-950/50 border border-crab-700 rounded-full mb-8">
-            <Zap className="w-4 h-4 text-crab-400" />
-            <span className="text-sm text-crab-300">Powered by OpenFacilitator x402</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#fb923c]/10 border border-[#fb923c]/30 rounded-full mb-8">
+            <Zap className="w-4 h-4 text-[#fb923c]" />
+            <span className="text-sm text-[#fb923c]">Multi-Token: USDC, DRAKIN, or KOBOLDS</span>
           </div>
 
-          <h1 className="font-arcade text-4xl sm:text-5xl lg:text-6xl text-white mb-6 glow-red leading-tight">
-            SHALOM
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl text-white mb-6 font-bold">
+            KOBOLDS
             <br />
-            <span className="text-crab-400">SERVICES</span>
+            <span className="text-[#fb923c]">SERVICES</span>
           </h1>
 
           <p className="max-w-2xl mx-auto text-xl text-gray-400 mb-6">
             Premium AI-powered services with instant crypto payments on Base.
-            No subscriptions. No friction. Just results.
+            Pay with USDC, DRAKIN, or KOBOLDS (10% discount with tokens!)
           </p>
 
-          {/* Multi-token badge */}
-          <div className="inline-flex items-center gap-4 px-6 py-3 bg-shell-800/50 border border-shell-700 rounded-full mb-10">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-full bg-[#2775CA] flex items-center justify-center text-white text-[10px] font-bold">
-                U
-              </div>
-              <span className="text-sm text-gray-300">USDC</span>
-            </div>
-            <div className="w-px h-4 bg-shell-600" />
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-full bg-[#FF6B35] flex items-center justify-center text-white text-[10px] font-bold">
-                D
-              </div>
-              <span className="text-sm text-gray-300">DRAKIN</span>
-            </div>
-            <div className="w-px h-4 bg-shell-600" />
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-full bg-[#8B5CF6] flex items-center justify-center text-white text-[10px] font-bold">
-                K
-              </div>
-              <span className="text-sm text-gray-300">KOBOLDS</span>
-            </div>
-            <div className="w-px h-4 bg-shell-600" />
-            <div className="flex items-center gap-1 text-neon-mint">
-              <BadgePercent className="w-4 h-4" />
-              <span className="text-xs font-medium">Save 10% with tokens!</span>
-            </div>
-          </div>
+          <p className="text-sm text-[#fb923c] mb-10">
+            Treasury: {TREASURY_ADDRESS.slice(0, 6)}...{TREASURY_ADDRESS.slice(-4)}
+          </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/moltlaunch-scanner"
-              className="btn-retro flex items-center gap-2"
+              className="bg-[#fb923c] text-[#0a0a0f] px-6 py-3 rounded-lg font-semibold flex items-center gap-2 hover:opacity-90"
             >
               <span>Launch Scanner</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
-              href="/research"
-              className="btn-retro btn-retro-secondary flex items-center gap-2"
+              href="/analytics"
+              className="border border-[#fb923c]/50 text-[#fb923c] px-6 py-3 rounded-lg font-semibold flex items-center gap-2 hover:bg-[#fb923c]/10"
             >
-              <span>AI Research</span>
-              <Brain className="w-4 h-4" />
+              <span>View Analytics</span>
+              <BarChart3 className="w-4 h-4" />
             </Link>
           </div>
 
           <div className="flex items-center justify-center gap-6 mt-8 text-sm text-gray-500">
             <div className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-neon-mint" />
-              <span>Secure Payments</span>
+              <Shield className="w-4 h-4 text-green-500" />
+              <span>x402 Secured</span>
             </div>
             <div className="flex items-center gap-2">
-              <Zap className="w-4 h-4 text-neon-peach" />
+              <Zap className="w-4 h-4 text-[#fb923c]" />
               <span>Instant Delivery</span>
             </div>
             <div className="flex items-center gap-2">
-              <Coins className="w-4 h-4 text-crab-400" />
-              <span>3 Token Options</span>
+              <span className="text-[#fb923c]">🐉</span>
+              <span>KOBOLDS Token 10% Off</span>
             </div>
           </div>
         </div>
       </section>
 
       {/* Services Grid */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-shell-900/50">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#0a0a0f]/50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="font-display text-2xl sm:text-3xl text-white mb-4">
+            <h2 className="text-2xl sm:text-3xl text-white mb-4 font-bold">
               Available Services
             </h2>
             <p className="text-gray-400 max-w-xl mx-auto">
-              Choose your service, connect your wallet, and pay with USDC, DRAKIN, or KOBOLDS for instant AI-powered results.
+              Choose your service, connect your wallet, and pay with any of three tokens. 
+              Save 10% when paying with DRAKIN or KOBOLDS.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service) => {
               const Icon = service.icon;
               return (
                 <Link
                   key={service.title}
                   href={service.href}
-                  className="group panel-retro p-6 hover:border-crab-700/50 border border-transparent transition-all duration-300"
+                  className="block bg-[#16161d] border border-[#2a2a35] rounded-lg p-6 hover:border-[#fb923c]/50 transition-all"
                 >
                   <div className="flex items-start justify-between mb-4">
-                    <div className="w-12 h-12 rounded-lg bg-crab-600/20 flex items-center justify-center group-hover:bg-crab-600/30 transition-colors">
-                      <Icon className="w-6 h-6 text-crab-400" />
+                    <div className="w-12 h-12 rounded-lg bg-[#fb923c]/20 flex items-center justify-center">
+                      <Icon className="w-6 h-6 text-[#fb923c]" />
                     </div>
-                    <div className="text-right">
-                      <span className="text-crab-400 font-display text-sm block">
-                        {service.priceUSD}
-                      </span>
-                      <span className="text-xs text-neon-mint">
-                        or {service.priceToken}
-                      </span>
-                    </div>
+                    <span className="text-[#fb923c] font-semibold text-sm">
+                      ${service.price.toFixed(2)}
+                    </span>
                   </div>
 
-                  <h3 className="font-display text-lg text-white mb-2 group-hover:text-crab-300 transition-colors">
+                  <h3 className="text-lg text-white font-semibold mb-2">
                     {service.title}
                   </h3>
 
@@ -175,11 +156,11 @@ export default function Home() {
                     {service.description}
                   </p>
 
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 mb-3">
                     {service.features.map((feature) => (
                       <span
                         key={feature}
-                        className="px-2 py-1 bg-shell-800 rounded text-xs text-gray-500"
+                        className="px-2 py-1 bg-[#0a0a0f] rounded text-xs text-gray-500"
                       >
                         {feature}
                       </span>
@@ -193,153 +174,46 @@ export default function Home() {
       </section>
 
       {/* Token Payment Info */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 border-t border-[#2a2a35]">
         <div className="max-w-4xl mx-auto">
-          <div className="panel-retro p-8">
-            <div className="text-center mb-8">
-              <h2 className="font-display text-2xl text-white mb-2">
-                Pay With Tokens, Save 10%
-              </h2>
-              <p className="text-gray-400">
-                Use DRAKIN or KOBOLDS tokens and get an automatic 10% discount on all services.
-              </p>
+          <h2 className="text-2xl text-white mb-8 text-center font-bold">Payment Options</h2>
+          
+          <div className="grid sm:grid-cols-3 gap-6">
+            <div className="bg-[#16161d] border border-[#2a2a35] rounded-lg p-6 text-center">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#2775CA]/20 flex items-center justify-center">
+                <span className="text-[#2775CA] font-bold">$</span>
+              </div>
+              <h3 className="text-white font-semibold mb-2">USDC</h3>
+              <p className="text-sm text-gray-400">Base price, stable value</p>
             </div>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="p-6 bg-shell-800/50 rounded-lg border border-shell-700">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-full bg-[#2775CA] flex items-center justify-center text-white font-bold">
-                    U
-                  </div>
-                  <div>
-                    <h3 className="text-white font-medium">USDC</h3>
-                    <p className="text-xs text-gray-500">Base Price</p>
-                  </div>
-                </div>
-                <ul className="text-sm text-gray-400 space-y-2">
-                  <li className="flex justify-between">
-                    <span>Research</span>
-                    <span className="text-white">$0.01</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Scanner</span>
-                    <span className="text-white">$0.05</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Consulting</span>
-                    <span className="text-white">$0.25</span>
-                  </li>
-                </ul>
+            
+            <div className="bg-[#16161d] border border-[#fb923c]/30 rounded-lg p-6 text-center">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#FF6B35]/20 flex items-center justify-center">
+                <span className="text-[#FF6B35] font-bold">D</span>
               </div>
-
-              <div className="p-6 bg-crab-950/20 rounded-lg border border-crab-700/50">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-full bg-[#FF6B35] flex items-center justify-center text-white font-bold">
-                    D
-                  </div>
-                  <div>
-                    <h3 className="text-white font-medium">DRAKIN</h3>
-                    <p className="text-xs text-neon-mint">10% Off</p>
-                  </div>
-                </div>
-                <ul className="text-sm text-gray-400 space-y-2">
-                  <li className="flex justify-between">
-                    <span>Research</span>
-                    <span className="text-neon-mint">1,000 DRAKIN</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Scanner</span>
-                    <span className="text-neon-mint">5,000 DRAKIN</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Consulting</span>
-                    <span className="text-neon-mint">25,000 DRAKIN</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-6 bg-purple-950/20 rounded-lg border border-purple-700/50">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-full bg-[#8B5CF6] flex items-center justify-center text-white font-bold">
-                    K
-                  </div>
-                  <div>
-                    <h3 className="text-white font-medium">KOBOLDS</h3>
-                    <p className="text-xs text-neon-mint">10% Off</p>
-                  </div>
-                </div>
-                <ul className="text-sm text-gray-400 space-y-2">
-                  <li className="flex justify-between">
-                    <span>Research</span>
-                    <span className="text-neon-mint">1,000 KOBOLDS</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Scanner</span>
-                    <span className="text-neon-mint">5,000 KOBOLDS</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Consulting</span>
-                    <span className="text-neon-mint">25,000 KOBOLDS</span>
-                  </li>
-                </ul>
-              </div>
+              <h3 className="text-white font-semibold mb-2">DRAKIN</h3>
+              <p className="text-sm text-[#fb923c]">10% discount applied!</p>
             </div>
-
-            <div className="mt-6 p-4 bg-shell-800/50 rounded-lg">
-              <p className="text-sm text-gray-400 text-center">
-                <span className="text-crab-400 font-medium">Note:</span> Token prices are approximate based on current market rates. 
-                Prices are updated periodically if market values shift more than 20%.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="font-display text-2xl sm:text-3xl text-white mb-4">
-              How It Works
-            </h2>
-          </div>
-
-          <div className="grid sm:grid-cols-3 gap-8">
-            {[
-              {
-                step: '01',
-                title: 'Connect Wallet',
-                description: 'Link your crypto wallet (Rainbow, MetaMask, Coinbase, etc.) via RainbowKit.',
-              },
-              {
-                step: '02',
-                title: 'Choose Service & Token',
-                description: 'Select your service and pick USDC, DRAKIN, or KOBOLDS for payment.',
-              },
-              {
-                step: '03',
-                title: 'Pay with x402',
-                description: 'Confirm the payment on Base Mainnet. Instant results delivered via OpenFacilitator.',
-              },
-            ].map((item) => (
-              <div key={item.step} className="text-center">
-                <div className="font-arcade text-3xl text-crab-600 mb-4">{item.step}</div>
-                <h3 className="font-display text-lg text-white mb-2">{item.title}</h3>
-                <p className="text-sm text-gray-400">{item.description}</p>
+            
+            <div className="bg-[#16161d] border border-[#8B5CF6]/30 rounded-lg p-6 text-center">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#8B5CF6]/20 flex items-center justify-center">
+                <span className="text-[#8B5CF6] font-bold">K</span>
               </div>
-            ))}
+              <h3 className="text-white font-semibold mb-2">KOBOLDS</h3>
+              <p className="text-sm text-[#8B5CF6]">10% discount applied!</p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-shell-700 py-8 px-4 sm:px-6 lg:px-8">
+      <footer className="border-t border-[#2a2a35] py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className="font-arcade text-xs text-crab-400">SHALOM SERVICES</span>
+            <span className="font-bold text-[#fb923c]">KOBOLDS SERVICES</span>
           </div>
           <p className="text-sm text-gray-500">
-            Built with x402 • Powered by OpenFacilitator • Base Network
+            Built with x402 • Multi-Token Payments • DRAKIN + KOBOLDS Utility
           </p>
         </div>
       </footer>

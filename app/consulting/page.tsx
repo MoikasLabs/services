@@ -238,8 +238,7 @@ export default function ConsultingPage() {
                     </div>
                   ) : (
                     <X402Payment
-                      amount={consultingServices.find((s) => s.id === selectedService)?.price?.split(' ')[0] || '25'}
-                      resource="/api/services/consulting"
+                      service="consulting"
                       onSuccess={handlePaymentSuccess}
                       buttonText="Pay & Book Session"
                     />

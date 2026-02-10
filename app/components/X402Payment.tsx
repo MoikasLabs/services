@@ -12,7 +12,8 @@ import {
   SUPPORTED_TOKENS,
   getTokenConfig,
   FACILITATOR_URL,
-  NETWORK_ID
+  NETWORK_ID,
+  SERVICE_PRICING,
 } from '../lib/openfacilitator';
 import { TokenSelector } from './TokenSelector';
 import { parseUnits } from 'viem';
