@@ -27,9 +27,9 @@ export const TOKEN_ADDRESSES = {
 };
 
 export const SERVICE_PRICING = {
-  'ai-research': { usd: 0.01, tokens: { DRAKIN: 1000, KOBOLDS: 1000 } },
-  'security-audit': { usd: 0.10, tokens: { DRAKIN: 10000, KOBOLDS: 10000 } },
-  'vault-setup': { usd: 0.05, tokens: { DRAKIN: 5000, KOBOLDS: 5000 } },
+  'ai-research': { usd: 15, tokens: { DRAKIN: 1500000, KOBOLDS: 1500000 } },
+  'security-audit': { usd: 25, tokens: { DRAKIN: 2500000, KOBOLDS: 2500000 } },
+  'vault-setup': { usd: 15, tokens: { DRAKIN: 1500000, KOBOLDS: 1500000 } },
 };
 
 export const TREASURY_ADDRESS = '0xc406fFf2Ce8b5dce517d03cd3531960eb2F6110d';
