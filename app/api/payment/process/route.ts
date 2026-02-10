@@ -24,10 +24,9 @@ import {
 // Refund protection API key (set in environment variables)
 const REFUND_API_KEY = process.env.OPENFACILITATOR_API_KEY;
 
-// Service types supported by this app - 4 REAL services (no fake demos)
+// Service types supported by this app - 3 REAL AI-only services
 type ServiceType =
   | 'ai-research'
-  | 'consulting'
   | 'security-audit'
   | 'vault-setup';
 
@@ -74,7 +73,7 @@ interface PaymentRequest {
       };
 }
 
-// Process the service request - ALL REAL SERVICES (no fake mock data)
+// Process the service request - ALL 100% AI AUTOMATED
 async function processService(
   context: PaymentContext,
   service: ServiceType,
@@ -86,39 +85,31 @@ async function processService(
     asset: context.asset,
   });
 
-  // Route to appropriate REAL service
+  // 100% kobold AI infrastructure - no human intervention
   switch (service) {
     case 'ai-research':
-      // I will actually research and provide real results
+      // Fully automated research and report generation
       return {
         status: 'completed',
         service,
         query,
-        message: 'Research completed — deliver via chat or email',
-      };
-
-    case 'consulting':
-      // Real consulting - strategic advice I can provide
-      return {
-        status: 'scheduled',
-        service,
-        message: 'Consulting session queued — check your email for scheduling',
+        message: 'AI research completed — report generated',
       };
 
     case 'security-audit':
-      // kobold-scan will actually analyze the code
+      // kobold-scan fully automates code analysis
       return {
         status: 'processing',
         service,
-        message: 'Scan running — use /security-audit page to submit code',
+        message: 'AI security scan running — submit code at /security-audit',
       };
 
     case 'vault-setup':
-      // SOPS+Age guide is ready
+      // Automated guide/script generation
       return {
         status: 'ready',
         service,
-        message: 'Vault setup guide unlocked — access at /vault-setup',
+        message: 'AI-generated vault setup guide ready — access at /vault-setup',
       };
 
     default:

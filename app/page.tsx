@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import { Brain, MessageSquare, Shield, Lock, ArrowRight, Zap } from 'lucide-react';
+import { Brain, Shield, Lock, ArrowRight, Zap } from 'lucide-react';
 import { Navigation } from './components/Navigation';
-import { SERVICE_PRICING, TREASURY_ADDRESS, TokenSymbol } from './lib/openfacilitator';
+import { SERVICE_PRICING, TREASURY_ADDRESS } from './lib/openfacilitator';
 
 export default function Home() {
   const services = [
@@ -25,13 +25,6 @@ export default function Home() {
       icon: Lock,
       href: '/vault-setup',
       price: SERVICE_PRICING['vault-setup'].usd,
-    },
-    {
-      title: 'Consulting',
-      description: 'Strategic AI automation consulting. Architecture review, implementation guidance, best practices.',
-      icon: MessageSquare,
-      href: '/consulting',
-      price: SERVICE_PRICING['consulting'].usd,
     },
   ];
 
@@ -60,7 +53,7 @@ export default function Home() {
           </h1>
 
           <p className="max-w-2xl mx-auto text-xl text-gray-400 mb-6">
-            Real AI-powered services, instant crypto payments on Base Network.
+            Fully automated AI services. 100% kobold infrastructure.
           </p>
 
           <p className="text-sm text-gray-500 mb-10 font-mono">
@@ -91,11 +84,11 @@ export default function Home() {
             </div>
             <div className="flex items-center gap-2">
               <Zap className="w-4 h-4 text-[#fb923c]" />
-              <span>Instant Delivery</span>
+              <span>AI-Powered</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-[#fb923c]">🐉</span>
-              <span>Token Discount</span>
+              <span>100% Automated</span>
             </div>
           </div>
         </div>
@@ -107,11 +100,11 @@ export default function Home() {
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl text-white mb-4 font-bold">Available Services</h2>
             <p className="text-gray-400 max-w-xl mx-auto">
-              Four real services. Pay with USDC, DRAKIN, or KOBOLDS — save 10% with ecosystem tokens.
+              Three fully-automated services. 100% kobold AI infrastructure — no human intervention.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-3 gap-6">
             {services.map((service) => {
               const Icon = service.icon;
               return (
@@ -176,7 +169,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <span className="font-bold text-[#fb923c]">KOBOLDS SERVICES</span>
           <p className="text-sm text-gray-500">
-            x402 • Real Services • DRAKIN + KOBOLDS Utility
+            x402 • AI Infrastructure • DRAKIN + KOBOLDS Utility
           </p>
         </div>
       </footer>
