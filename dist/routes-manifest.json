@@ -41,12 +41,6 @@
       "namedRegex": "^/_not\\-found(?:/)?$"
     },
     {
-      "page": "/analytics",
-      "regex": "^/analytics(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/analytics(?:/)?$"
-    },
-    {
       "page": "/api/payment/process",
       "regex": "^/api/payment/process(?:/)?$",
       "routeKeys": {},
@@ -69,6 +63,18 @@
       "regex": "^/research(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/research(?:/)?$"
+    },
+    {
+      "page": "/security-audit",
+      "regex": "^/security\\-audit(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/security\\-audit(?:/)?$"
+    },
+    {
+      "page": "/vault-setup",
+      "regex": "^/vault\\-setup(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/vault\\-setup(?:/)?$"
     }
   ],
   "dataRoutes": [],

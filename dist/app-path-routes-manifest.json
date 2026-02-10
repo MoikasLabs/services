@@ -1,10 +1,11 @@
 {
   "/_global-error/page": "/_global-error",
   "/_not-found/page": "/_not-found",
-  "/analytics/page": "/analytics",
   "/api/payment/process/route": "/api/payment/process",
   "/consulting/page": "/consulting",
   "/favicon.ico/route": "/favicon.ico",
   "/page": "/",
-  "/research/page": "/research"
+  "/research/page": "/research",
+  "/security-audit/page": "/security-audit",
+  "/vault-setup/page": "/vault-setup"
 }

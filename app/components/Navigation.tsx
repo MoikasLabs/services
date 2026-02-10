@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { Brain, BarChart3, MessageSquare, Flame, Radar } from 'lucide-react';
+import { Brain, MessageSquare, Shield, Lock, Flame } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -16,7 +16,8 @@ export function Navigation() {
 
   const navItems = [
     { href: '/research', label: 'Research', icon: Brain },
-    { href: '/analytics', label: 'Analytics', icon: BarChart3 },
+    { href: '/security-audit', label: 'Security', icon: Shield },
+    { href: '/vault-setup', label: 'Vault', icon: Lock },
     { href: '/consulting', label: 'Consulting', icon: MessageSquare },
   ];
 

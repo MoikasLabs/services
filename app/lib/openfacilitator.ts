@@ -13,11 +13,10 @@ import {
 export { OpenFacilitator, createPaymentContext, type PaymentContext, type PaymentRequirements, type PaymentRequirementsV2 };
 export { withRefundProtection } from '@openfacilitator/sdk';
 
-// App-specific types (extend from SDK or define locally)
+// App-specific types (extend from SDK or define locally) - REAL SERVICES ONLY
 export type TokenSymbol = 'USDC' | 'DRAKIN' | 'KOBOLDS';
 export type ServiceType =
   | 'ai-research'
-  | 'analytics'
   | 'consulting'
   | 'security-audit'
   | 'vault-setup';
@@ -30,7 +29,6 @@ export const TOKEN_ADDRESSES = {
 
 export const SERVICE_PRICING = {
   'ai-research': { usd: 0.01, tokens: { DRAKIN: 1000, KOBOLDS: 1000 } },
-  'analytics': { usd: 0.05, tokens: { DRAKIN: 5000, KOBOLDS: 5000 } },
   'consulting': { usd: 0.25, tokens: { DRAKIN: 25000, KOBOLDS: 25000 } },
   'security-audit': { usd: 0.10, tokens: { DRAKIN: 10000, KOBOLDS: 10000 } },
   'vault-setup': { usd: 0.05, tokens: { DRAKIN: 5000, KOBOLDS: 5000 } },
