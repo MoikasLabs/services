@@ -93,12 +93,17 @@ export function calculateDisplayAmount(service: string, token: string) {
   if (!pricing) return { amount: 0, usdValue: 0, discountApplied: 0, displayText: '$0' };
 
   if (token === 'USDC') {
+    // Show cents for small amounts, dollars for larger
+    if (pricing.usd < 1) {
+      return { amount: pricing.usd, usdValue: pricing.usd, discountApplied: 0, displayText: `${(pricing.usd * 100).toFixed(0)}¢` };
+    }
     return { amount: pricing.usd, usdValue: pricing.usd, discountApplied: 0, displayText: `$${pricing.usd.toFixed(2)}` };
   }
 
   const tokenAmount = pricing.tokens[token as keyof typeof pricing.tokens] || 0;
   const usdValue = pricing.usd * 0.9; // 10% discount
-  return { amount: tokenAmount, usdValue, discountApplied: 0.1, displayText: `${tokenAmount.toLocaleString()} ${token}` };
+  // Format with commas for readability
+  return { amount: tokenAmount, usdValue, discountApplied: 0.1, displayText: `${tokenAmount.toLocaleString()} ${token} (~$${usdValue.toFixed(2)})` };
 }
 
 // Create payment requirements for x402 (v2 format)

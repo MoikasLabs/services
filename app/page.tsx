@@ -136,7 +136,7 @@ export default function Home() {
                       <Icon className="w-6 h-6 text-[#fb923c]" />
                     </div>
                     <span className="text-[#fb923c] font-semibold text-sm">
-                      ${service.price.toFixed(2)}
+                      {service.price < 1 ? `${(service.price * 100).toFixed(0)}¢` : `$${service.price.toFixed(2)}`}
                     </span>
                   </div>
 
