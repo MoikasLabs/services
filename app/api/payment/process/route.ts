@@ -27,7 +27,6 @@ const REFUND_API_KEY = process.env.OPENFACILITATOR_API_KEY;
 // Service types supported by this app
 type ServiceType =
   | 'ai-research'
-  | 'moltlaunch-scanner'
   | 'analytics'
   | 'consulting'
   | 'security-audit'
@@ -97,14 +96,6 @@ async function processService(
         service,
         query,
         message: 'Research results would be generated here',
-      };
-
-    case 'moltlaunch-scanner':
-      // Moltlaunch scanner fetches data directly from KOBOLDS API
-      return {
-        status: 'completed',
-        service,
-        message: 'Scanner data available on client side',
       };
 
     case 'analytics':

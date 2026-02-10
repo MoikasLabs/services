@@ -65,12 +65,6 @@
       "namedRegex": "^/favicon\\.ico(?:/)?$"
     },
     {
-      "page": "/moltlaunch-scanner",
-      "regex": "^/moltlaunch\\-scanner(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/moltlaunch\\-scanner(?:/)?$"
-    },
-    {
       "page": "/research",
       "regex": "^/research(?:/)?$",
       "routeKeys": {},

@@ -127,30 +127,6 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/moltlaunch-scanner": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/moltlaunch-scanner",
-      "dataRoute": "/moltlaunch-scanner.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
     "/": {
       "experimentalBypassFor": [
         {
@@ -203,8 +179,8 @@
   "dynamicRoutes": {},
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "78d2c751d3a6d07335ceea7c5a43a688",
-    "previewModeSigningKey": "498f4e1bcedb631041be0f9de28f5f1c3c7548804e371277ab43582c7daa7cdf",
-    "previewModeEncryptionKey": "505bb89b20bdf7757b8ffe63abde966a024c3a73e0935a17621ca13fa6f6ba68"
+    "previewModeId": "b1eda344b5ca1703f2307ac0f5f4d76e",
+    "previewModeSigningKey": "deb5c1a39b14f01cb6182f6d3e3aba1a7341a0bc28cb2d93dd183fd6a1c562a5",
+    "previewModeEncryptionKey": "e19e53dddd561c52142e3fbe0984d17e3bd62a211e8f7e7edb957c741fa4e752"
   }
 }

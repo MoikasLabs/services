@@ -16,7 +16,6 @@ export function Navigation() {
 
   const navItems = [
     { href: '/research', label: 'Research', icon: Brain },
-    { href: '/moltlaunch-scanner', label: 'Scanner', icon: Radar },
     { href: '/analytics', label: 'Analytics', icon: BarChart3 },
     { href: '/consulting', label: 'Consulting', icon: MessageSquare },
   ];

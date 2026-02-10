@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Brain, BarChart3, MessageSquare, Radar, ArrowRight, Zap, Shield } from 'lucide-react';
+import { Brain, BarChart3, MessageSquare, ArrowRight, Zap, Shield } from 'lucide-react';
 import { Navigation } from './components/Navigation';
 import { TokenSelector } from './components/TokenSelector';
 import { SERVICE_PRICING, TREASURY_ADDRESS } from './lib/openfacilitator';
@@ -13,14 +13,6 @@ export default function Home() {
       href: '/research',
       features: ['TipTap Editor', 'x402 Payments', 'Instant Results'],
       price: SERVICE_PRICING['ai-research'].usd,
-    },
-    {
-      title: 'Moltlaunch Scanner',
-      description: 'Real-time Moltlaunch agent network analysis. Top power scores, volume trends, treasury insights.',
-      icon: Radar,
-      href: '/moltlaunch-scanner',
-      features: ['Live Network Data', 'Power Rankings', 'Treasury Health'],
-      price: SERVICE_PRICING['moltlaunch-scanner'].usd,
     },
     {
       title: 'Analytics',
@@ -85,10 +77,10 @@ export default function Home() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/moltlaunch-scanner"
+              href="/research"
               className="bg-[#fb923c] text-[#0a0a0f] px-6 py-3 rounded-lg font-semibold flex items-center gap-2 hover:opacity-90"
             >
-              <span>Launch Scanner</span>
+              <span>Start Research</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
