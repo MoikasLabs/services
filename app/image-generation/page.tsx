@@ -140,7 +140,7 @@ export default function ImageGenerationPage() {
               {/* Tier Selection */}
               <div className="mb-4">
                 <label className="block text-sm text-gray-400 mb-3">Quality Tier</label>
-                <div className="grid grid-cols-4 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
                   {TIERS.map((tier) => {
                     const Icon = tier.icon;
                     return (
@@ -148,7 +148,7 @@ export default function ImageGenerationPage() {
                         key={tier.id}
                         onClick={() => setSelectedTier(tier.id)}
                         disabled={isGenerating}
-                        className={`p-3 rounded-lg border text-left transition-all ${
+                        className={`p-3 rounded-lg border text-left transition-all min-h-[70px] ${
                           selectedTier === tier.id
                             ? 'border-crab-500 bg-crab-600/20'
                             : 'border-shell-700 hover:border-shell-600'
@@ -156,7 +156,7 @@ export default function ImageGenerationPage() {
                       >
                         <div className="flex items-center justify-between mb-1">
                           <div className="flex items-center gap-2">
-                            <Icon className="w-4 h-4 text-crab-400" />
+                            <Icon className="w-4 h-4 text-crab-400 flex-shrink-0" />
                             <span className="text-white text-sm font-medium">{tier.name}</span>
                           </div>
                           <span className="text-crab-400 text-xs font-bold">{tier.price}</span>
@@ -171,13 +171,13 @@ export default function ImageGenerationPage() {
               {/* Size Selection */}
               <div className="mb-6">
                 <label className="block text-sm text-gray-400 mb-3">Image Size</label>
-                <div className="grid grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   {['square', 'portrait', 'landscape', 'wallpaper'].map((s) => (
                     <button
                       key={s}
                       onClick={() => setSize(s)}
                       disabled={isGenerating}
-                      className={`p-2 rounded-lg border text-center transition-all capitalize ${
+                      className={`p-2 rounded-lg border text-center transition-all capitalize min-h-[44px] ${
                         size === s
                           ? 'border-crab-500 bg-crab-600/20 text-white'
                           : 'border-shell-700 text-gray-400 hover:border-shell-600'
