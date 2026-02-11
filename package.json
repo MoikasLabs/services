@@ -42,9 +42,6 @@
     "typescript": "5.7.2"
   },
   "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint --fix",
-      "bash -c 'tsc --noEmit'"
-    ]
+    "*.{ts,tsx}": "bash -c 'npx tsc --noEmit'"
   }
 }

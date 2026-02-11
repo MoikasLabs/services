@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+# Run lint-staged
+npx lint-staged
+
+# Validate package.json (check dependencies only, not lint-staged config)
+if grep -E '"(dependencies|devDependencies)"' package.json -A 50 | grep -q '"file:'; then
+    echo "❌ Error: 'file:' paths not allowed in dependencies"
+    echo "Found:"
+    grep -E '"(dependencies|devDependencies)"' package.json -A 50 | grep '"file:'
+    exit 1
+fi
+
+echo "✅ Pre-commit checks passed"
