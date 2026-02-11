@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Brain, Shield, Lock, ArrowRight, Zap } from 'lucide-react';
+import { Brain, Shield, Lock, Wand2, ArrowRight, Zap } from 'lucide-react';
 import { Navigation } from './components/Navigation';
 import { SERVICE_PRICING, TREASURY_ADDRESS } from './lib/openfacilitator';
 
@@ -25,6 +25,13 @@ export default function Home() {
       icon: Lock,
       href: '/vault-setup',
       price: SERVICE_PRICING['vault-setup'].usd,
+    },
+    {
+      title: 'Image Generation',
+      description: 'AI image generation via Fal.ai. FLUX models from fast prototyping to photorealistic output.',
+      icon: Wand2,
+      href: '/image-generation',
+      price: SERVICE_PRICING['image-generation'].usd,
     },
   ];
 
@@ -69,11 +76,11 @@ export default function Home() {
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
-              href="/security-audit"
+              href="/image-generation"
               className="border border-[#fb923c]/50 text-[#fb923c] px-6 py-3 rounded-lg font-semibold flex items-center gap-2 hover:bg-[#fb923c]/10"
             >
-              <span>Audit Contract</span>
-              <Shield className="w-4 h-4" />
+              <span>Generate Image</span>
+              <Wand2 className="w-4 h-4" />
             </Link>
           </div>
 
@@ -100,11 +107,11 @@ export default function Home() {
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl text-white mb-4 font-bold">Available Services</h2>
             <p className="text-gray-400 max-w-xl mx-auto">
-              Three fully-automated services. 100% kobold AI infrastructure — no human intervention.
+              Four fully-automated services. 100% kobold AI infrastructure — no human intervention.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 gap-6">
             {services.map((service) => {
               const Icon = service.icon;
               return (

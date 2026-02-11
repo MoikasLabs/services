@@ -18,7 +18,8 @@ export type TokenSymbol = 'USDC' | 'DRAKIN' | 'KOBOLDS';
 export type ServiceType =
   | 'ai-research'
   | 'security-audit'
-  | 'vault-setup';
+  | 'vault-setup'
+  | 'image-generation';
 
 export const TOKEN_ADDRESSES = {
   USDC: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
@@ -30,6 +31,7 @@ export const SERVICE_PRICING = {
   'ai-research': { usd: 15, tokens: { DRAKIN: 1500000, KOBOLDS: 1500000 } },
   'security-audit': { usd: 25, tokens: { DRAKIN: 2500000, KOBOLDS: 2500000 } },
   'vault-setup': { usd: 15, tokens: { DRAKIN: 1500000, KOBOLDS: 1500000 } },
+  'image-generation': { usd: 20, tokens: { DRAKIN: 2000000, KOBOLDS: 2000000 } },
 };
 
 export const TREASURY_ADDRESS = '0xc406fFf2Ce8b5dce517d03cd3531960eb2F6110d';

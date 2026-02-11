@@ -24,11 +24,12 @@ import {
 // Refund protection API key (set in environment variables)
 const REFUND_API_KEY = process.env.OPENFACILITATOR_API_KEY;
 
-// Service types supported by this app - 3 REAL AI-only services
+// Service types supported by this app - 4 REAL AI-only services
 type ServiceType =
   | 'ai-research'
   | 'security-audit'
-  | 'vault-setup';
+  | 'vault-setup'
+  | 'image-generation';
 
 // Token symbols supported
 type TokenSymbol = 'USDC' | 'DRAKIN' | 'KOBOLDS';
@@ -110,6 +111,14 @@ async function processService(
         status: 'ready',
         service,
         message: 'AI-generated vault setup guide ready — access at /vault-setup',
+      };
+
+    case 'image-generation':
+      // Fal.ai automated image generation
+      return {
+        status: 'generating',
+        service,
+        message: 'AI image generation queued — use /image-generation to generate',
       };
 
     default:
