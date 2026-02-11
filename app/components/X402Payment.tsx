@@ -54,12 +54,22 @@ export function X402Payment({
 
   // Fetch live token prices on mount and when token changes to DRAKIN/KOBOLDS
   useEffect(() => {
-    if (selectedToken === 'USDC') return; // USDC doesn't need price fetch
+    if (selectedToken === 'USDC') {
+      setLivePrices(null); // Clear live prices for USDC
+      return;
+    }
     
+    console.log(`[X402Payment] Fetching live prices for ${selectedToken}...`);
     setIsLoadingPrices(true);
     getTokenPrices()
-      .then(setLivePrices)
-      .catch(err => console.error('Price fetch error:', err))
+      .then(prices => {
+        console.log(`[X402Payment] Got prices:`, prices);
+        setLivePrices(prices);
+      })
+      .catch(err => {
+        console.error('[X402Payment] Price fetch error:', err);
+        setLivePrices(null);
+      })
       .finally(() => setIsLoadingPrices(false));
   }, [selectedToken]);
 
@@ -75,9 +85,13 @@ export function X402Payment({
       return { amount: basePricing.usd, usdValue: basePricing.usd, discountApplied: 0, displayText: `$${basePricing.usd.toFixed(2)}` };
     }
 
-    // Use live price if available, otherwise fallback to static
-    if (livePrices && livePrices[selectedToken] > 0) {
-      const dynamic = calculateDynamicAmount(basePricing.usd, selectedToken, livePrices[selectedToken]);
+    // Use live price if available
+    const tokenPrice = livePrices?.[selectedToken];
+    console.log(`[X402Payment] Calculating pricing for ${selectedToken}:`, { tokenPrice, livePrices });
+    
+    if (tokenPrice && tokenPrice > 0) {
+      const dynamic = calculateDynamicAmount(basePricing.usd, selectedToken, tokenPrice);
+      console.log(`[X402Payment] Dynamic pricing result:`, dynamic);
       return { 
         amount: dynamic.amount, 
         usdValue: basePricing.usd * 0.9, 
@@ -87,6 +101,7 @@ export function X402Payment({
     }
 
     // Fallback to static pricing from SERVICE_PRICING
+    console.log(`[X402Payment] Using FALLBACK static pricing for ${selectedToken}`);
     const staticAmount = basePricing.tokens[selectedToken as keyof typeof basePricing.tokens] || 0;
     return { 
       amount: staticAmount, 
