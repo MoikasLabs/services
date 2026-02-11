@@ -112,13 +112,20 @@ export function calculateDisplayAmount(service: string, token: string) {
 }
 
 // Create payment requirements for x402 (v2 format)
-export function createPaymentRequirements(service: string, token: string): PaymentRequirementsV2 {
+export function createPaymentRequirements(
+  service: string, 
+  token: string, 
+  dynamicAmount?: number
+): PaymentRequirementsV2 {
   const pricing = SERVICE_PRICING[service as keyof typeof SERVICE_PRICING];
   const tokenAddress = TOKEN_ADDRESSES[token as keyof typeof TOKEN_ADDRESSES] || TOKEN_ADDRESSES.USDC;
 
   let amount: string;
   if (token === 'USDC') {
     amount = (pricing.usd * 1_000_000).toFixed(0); // 6 decimals
+  } else if (dynamicAmount && dynamicAmount > 0) {
+    // Use dynamic amount from live pricing (already includes decimals)
+    amount = (dynamicAmount * 10 ** 18).toString();
   } else {
     const tokenAmount = pricing.tokens[token as keyof typeof pricing.tokens] || 0;
     amount = (tokenAmount * 10 ** 18).toString();

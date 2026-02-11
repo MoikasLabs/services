@@ -1,12 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAccount, useChainId, useSignTypedData } from 'wagmi';
 import { Wallet, Zap, CheckCircle, AlertCircle, Loader2, Coins } from 'lucide-react';
-import { 
-  facilitator, 
+import {
+  facilitator,
   createPaymentRequirements,
-  calculateDisplayAmount,
   ServiceType,
   TokenSymbol,
   SUPPORTED_TOKENS,
@@ -15,6 +14,7 @@ import {
   NETWORK_ID,
   SERVICE_PRICING,
 } from '../lib/openfacilitator';
+import { calculateDynamicAmount, getTokenPrices } from '../lib/dynamic-pricing';
 import { TokenSelector } from './TokenSelector';
 import { parseUnits } from 'viem';
 
@@ -49,9 +49,54 @@ export function X402Payment({
   const [status, setStatus] = useState<PaymentStatus>('idle');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [transactionHash, setTransactionHash] = useState<string>('');
+  const [livePrices, setLivePrices] = useState<{ DRAKIN: number; KOBOLDS: number } | null>(null);
+  const [isLoadingPrices, setIsLoadingPrices] = useState(false);
 
-  // Get pricing for display
-  const pricing = calculateDisplayAmount(service, selectedToken);
+  // Fetch live token prices on mount and when token changes to DRAKIN/KOBOLDS
+  useEffect(() => {
+    if (selectedToken === 'USDC') return; // USDC doesn't need price fetch
+    
+    setIsLoadingPrices(true);
+    getTokenPrices()
+      .then(setLivePrices)
+      .catch(err => console.error('Price fetch error:', err))
+      .finally(() => setIsLoadingPrices(false));
+  }, [selectedToken]);
+
+  // Calculate pricing display
+  const getPricing = () => {
+    const basePricing = SERVICE_PRICING[service as keyof typeof SERVICE_PRICING];
+    if (!basePricing) return { amount: 0, usdValue: 0, discountApplied: 0, displayText: '$0' };
+
+    if (selectedToken === 'USDC') {
+      if (basePricing.usd < 1) {
+        return { amount: basePricing.usd, usdValue: basePricing.usd, discountApplied: 0, displayText: `${(basePricing.usd * 100).toFixed(0)}¢` };
+      }
+      return { amount: basePricing.usd, usdValue: basePricing.usd, discountApplied: 0, displayText: `$${basePricing.usd.toFixed(2)}` };
+    }
+
+    // Use live price if available, otherwise fallback to static
+    if (livePrices && livePrices[selectedToken] > 0) {
+      const dynamic = calculateDynamicAmount(basePricing.usd, selectedToken, livePrices[selectedToken]);
+      return { 
+        amount: dynamic.amount, 
+        usdValue: basePricing.usd * 0.9, 
+        discountApplied: 0.1, 
+        displayText: dynamic.displayText 
+      };
+    }
+
+    // Fallback to static pricing from SERVICE_PRICING
+    const staticAmount = basePricing.tokens[selectedToken as keyof typeof basePricing.tokens] || 0;
+    return { 
+      amount: staticAmount, 
+      usdValue: basePricing.usd * 0.9, 
+      discountApplied: 0.1, 
+      displayText: `${staticAmount.toLocaleString()} ${selectedToken} (~$${(basePricing.usd * 0.9).toFixed(2)})` 
+    };
+  };
+
+  const pricing = getPricing();
   const tokenConfig = getTokenConfig(selectedToken);
 
   const handlePayment = async () => {
@@ -72,22 +117,22 @@ export function X402Payment({
     setErrorMessage('');
 
     try {
-      // Create payment requirements
-      const requirements = createPaymentRequirements(service, selectedToken);
+      // Create payment requirements with dynamic amount if available
+      const requirements = createPaymentRequirements(service, selectedToken, pricing.amount);
       console.log('Payment requirements:', requirements);
 
       // Step 1: Request payment authorization from user
       // In a real implementation, this would use the x402 client library
       // to create the authorization. For now, we'll use viem to sign the
       // EIP-3009 authorization.
-      
+
       setStatus('signing');
-      
+
       // Get current time for authorization validity
       const now = Math.floor(Date.now() / 1000);
       const validAfter = now - 60; // Valid from 1 minute ago
       const validBefore = now + 600; // Valid for 10 minutes
-      
+
       // Generate a unique nonce
       const nonce = `0x${Array.from(crypto.getRandomValues(new Uint8Array(32)))
         .map(b => b.toString(16).padStart(2, '0'))
@@ -125,16 +170,16 @@ export function X402Payment({
       // Sign the authorization
       // Note: In production, this should be done via a proper x402 client
       // that handles the 402 flow automatically
-      
+
       setStatus('settling');
-      
+
       // For demo purposes, we'll simulate the payment verification
       // In production, this would:
       // 1. Submit to the x402 facilitator
       // 2. Facilitator verifies signature
       // 3. Facilitator submits to blockchain
       // 4. Return transaction hash
-      
+
       // Simulate API call to backend
       const response = await fetch('/api/payment/process', {
         method: 'POST',
@@ -158,10 +203,10 @@ export function X402Payment({
       }
 
       const result = await response.json();
-      
+
       setTransactionHash(result.transactionHash || '0x' + Math.random().toString(16).slice(2, 34));
       setStatus('success');
-      
+
       onSuccess?.({
         transactionHash: result.transactionHash || 'simulated',
         amount: pricing.displayText,
@@ -250,7 +295,13 @@ export function X402Payment({
             selectedToken={selectedToken}
             onSelect={setSelectedToken}
           />
-          {pricing.discountApplied > 0 && (
+          {isLoadingPrices && selectedToken !== 'USDC' && (
+            <p className="text-xs text-gray-500 flex items-center gap-1">
+              <Loader2 className="w-3 h-3 animate-spin" />
+              Fetching live {selectedToken} price...
+            </p>
+          )}
+          {pricing.discountApplied > 0 && !isLoadingPrices && (
             <p className="text-xs text-neon-mint flex items-center gap-1">
               <Coins className="w-3 h-3" />
               Save 10% when paying with {selectedToken}!
@@ -308,7 +359,7 @@ export function useX402Payment() {
 
     try {
       const requirements = createPaymentRequirements(service, token);
-      
+
       // Simulated API call - in production, use actual x402 flow
       const response = await fetch('/api/payment/process', {
         method: 'POST',
@@ -327,14 +378,14 @@ export function useX402Payment() {
       }
 
       const result = await response.json();
-      
+
       const paymentResult: PaymentSuccessResponse = {
         transactionHash: result.transactionHash || 'simulated',
         amount: requirements.amount,
         token,
         service,
       };
-      
+
       setData(paymentResult);
       setIsLoading(false);
       return paymentResult;
@@ -350,4 +401,4 @@ export function useX402Payment() {
 }
 
 // Export token info for display
-export { SUPPORTED_TOKENS, calculateDisplayAmount, type TokenSymbol, type ServiceType };
+export { SUPPORTED_TOKENS, type TokenSymbol, type ServiceType };
