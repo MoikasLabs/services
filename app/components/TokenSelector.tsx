@@ -4,8 +4,7 @@ import { useState } from 'react';
 import { Check, ChevronDown, BadgePercent } from 'lucide-react';
 import { 
   TokenSymbol, 
-  SUPPORTED_TOKENS, 
-  calculateDisplayAmount,
+  SUPPORTED_TOKENS,
   ServiceType 
 } from '../lib/openfacilitator';
 
@@ -29,7 +28,7 @@ export function TokenSelector({ selectedToken, onSelect, service }: TokenSelecto
           <div className="text-left">
             <span className="text-sm font-medium text-white">{selectedToken}</span>
             <span className="text-xs text-gray-500 ml-2">
-              {calculateDisplayAmount(service, selectedToken).displayText}
+              Select payment token
             </span>
           </div>
         </div>
@@ -39,7 +38,6 @@ export function TokenSelector({ selectedToken, onSelect, service }: TokenSelecto
       {isOpen && (
         <div className="absolute top-full left-0 right-0 mt-1 bg-shell-800 border border-shell-700 rounded-lg shadow-xl z-50 overflow-hidden">
           {SUPPORTED_TOKENS.map((token) => {
-            const pricing = calculateDisplayAmount(service, token.symbol);
             const isSelected = selectedToken === token.symbol;
 
             return (
@@ -66,12 +64,7 @@ export function TokenSelector({ selectedToken, onSelect, service }: TokenSelecto
                       )}
                     </div>
                     <span className="text-xs text-gray-500">
-                      {pricing.displayText}
-                      {token.discount > 0 && (
-                        <span className="text-neon-mint ml-1">
-                          (~${pricing.usdValue.toFixed(3)})
-                        </span>
-                      )}
+                      {token.symbol === 'USDC' ? 'Stablecoin (USD)' : 'Get live price on selection'}
                     </span>
                   </div>
                 </div>

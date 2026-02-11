@@ -257,7 +257,6 @@ export default function ImageGenerationPage() {
                 <X402Payment
                   service={`image-generation-${selectedTier}` as 'image-generation-standard' | 'image-generation-premium' | 'image-generation-4k'}
                   onSuccess={handlePaymentSuccess}
-                  buttonText={`Pay ${selectedTierData?.price} • Generate`}
                 />
               )}
 
