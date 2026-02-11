@@ -19,7 +19,10 @@ export type ServiceType =
   | 'ai-research'
   | 'security-audit'
   | 'vault-setup'
-  | 'image-generation';
+  | 'image-generation-standard'
+  | 'image-generation-premium'
+  | 'image-generation-4k'
+  | 'image-editing';
 
 export const TOKEN_ADDRESSES = {
   USDC: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
@@ -31,7 +34,11 @@ export const SERVICE_PRICING = {
   'ai-research': { usd: 15, tokens: { DRAKIN: 1500000, KOBOLDS: 1500000 } },
   'security-audit': { usd: 25, tokens: { DRAKIN: 2500000, KOBOLDS: 2500000 } },
   'vault-setup': { usd: 15, tokens: { DRAKIN: 1500000, KOBOLDS: 1500000 } },
-  'image-generation': { usd: 0.10, tokens: { DRAKIN: 10000, KOBOLDS: 10000 } }, // ~10¢ cost-based pricing
+  // Image generation tiers (NanoBanana via Fal.ai)
+  'image-generation-standard': { usd: 0.05, tokens: { DRAKIN: 5000, KOBOLDS: 5000 } }, // 5¢
+  'image-generation-premium': { usd: 0.18, tokens: { DRAKIN: 18000, KOBOLDS: 18000 } }, // 18¢
+  'image-generation-4k': { usd: 0.35, tokens: { DRAKIN: 35000, KOBOLDS: 35000 } }, // 35¢
+  'image-editing': { usd: 0.18, tokens: { DRAKIN: 18000, KOBOLDS: 18000 } }, // ~18¢
 };
 
 export const TREASURY_ADDRESS = '0xc406fFf2Ce8b5dce517d03cd3531960eb2F6110d';

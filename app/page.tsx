@@ -31,7 +31,7 @@ export default function Home() {
       description: 'AI image generation via Fal.ai. FLUX models from fast prototyping to photorealistic output.',
       icon: Wand2,
       href: '/image-generation',
-      price: SERVICE_PRICING['image-generation'].usd,
+      price: SERVICE_PRICING['image-generation-standard'].usd,
     },
   ];
 
