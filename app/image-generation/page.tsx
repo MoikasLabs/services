@@ -14,7 +14,7 @@ const TIERS = [
     time: '1-3s',
     price: '5¢',
     icon: RefreshCcw,
-    model: 'fal-ai/nano-banana',
+    model: 'fal-ai/nano-banana' as const,
     cost: '$0.039',
   },
   {
@@ -24,7 +24,7 @@ const TIERS = [
     time: '2-5s',
     price: '18¢',
     icon: Wand2,
-    model: 'fal-ai/nano-banana-pro',
+    model: 'fal-ai/nano-banana-pro' as const,
     cost: '$0.15',
   },
   {
@@ -34,7 +34,7 @@ const TIERS = [
     time: '3-8s',
     price: '35¢',
     icon: Sparkles,
-    model: 'fal-ai/nano-banana-pro',
+    model: 'fal-ai/nano-banana-pro' as const,
     cost: '$0.30',
   },
 ];
@@ -60,37 +60,48 @@ export default function ImageGenerationPage() {
     setIsGenerating(true);
     setError(null);
     
-    // Simulate API call to fal.ai via x402
-    setTimeout(() => {
-      // Mock result - in production this would be real fal.ai response
-      const modelMap: Record<string, string> = {
-        standard: 'fal-ai/nano-banana',
-        premium: 'fal-ai/nano-banana-pro',
-        '4k': 'fal-ai/nano-banana-pro',
-      };
-      const timeMap: Record<string, number> = {
-        standard: 1500,
-        premium: 3500,
-        '4k': 5500,
-      };
+    const tierData = TIERS.find(t => t.id === selectedTier);
+    if (!tierData) {
+      setError('Invalid tier selected');
+      setIsGenerating(false);
+      return;
+    }
+    
+    try {
+      const response = await fetch('/api/generate-image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt,
+          model: tierData.model.includes('nano-banana-pro') ? 'nano-banana-pro' : 'nano-banana',
+          image_size: size === 'wallpaper' ? 'landscape' : size,
+          is4k: selectedTier === '4k',
+        }),
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Image generation failed');
+      }
       
       setResult({
         status: 'completed',
-        images: [{
-          url: `https://fal.ai/generated/${Date.now()}.png`,
-          width: size === 'square' ? 1024 : size === 'portrait' ? 832 : 1216,
-          height: size === 'square' ? 1024 : size === 'portrait' ? 1216 : 832,
-        }],
+        images: data.images,
         metadata: {
           tier: selectedTier,
-          model: modelMap[selectedTier],
-          generation_time_ms: timeMap[selectedTier],
-          seed: Math.floor(Math.random() * 1000000),
+          model: tierData.model,
+          generation_time_ms: data.timings?.inference || 0,
+          seed: data.seed,
         },
         timestamp: new Date().toISOString(),
       });
+    } catch (err) {
+      console.error('Generation error:', err);
+      setError(err instanceof Error ? err.message : 'Failed to generate image');
+    } finally {
       setIsGenerating(false);
-    }, 2000);
+    }
   };
 
   const selectedTierData = TIERS.find(t => t.id === selectedTier) || TIERS[0];
@@ -107,7 +118,7 @@ export default function ImageGenerationPage() {
             </div>
             <div>
               <h1 className="font-display text-2xl sm:text-3xl text-white">AI Image Generation</h1>
-              <p className="text-gray-400 text-sm">Powered by Fal.ai — 600+ models via x402</p>
+              <p className="text-gray-400 text-sm">Powered by Fal.ai — Google NanoBanana via x402</p>
             </div>
           </div>
         </div>
@@ -199,18 +210,29 @@ export default function ImageGenerationPage() {
                 <div className="space-y-4">
                   {/* Result */}
                   <div className="bg-shell-800 rounded-lg p-4">
-                    <div className="aspect-square bg-shell-900 rounded-lg flex items-center justify-center mb-4">
-                      <div className="text-center text-gray-500">
-                        <Image className="w-16 h-16 mx-auto mb-2 opacity-50" />
-                        <p className="text-sm">Generated Image</p>
-                        <p className="text-xs text-gray-600">{result.images[0].width}x{result.images[0].height}</p>
-                      </div>
+                    <div className="aspect-square bg-shell-900 rounded-lg flex items-center justify-center mb-4 overflow-hidden">
+                      {result.images?.[0]?.url ? (
+                        <img 
+                          src={result.images[0].url} 
+                          alt="Generated" 
+                          className="max-w-full max-h-full object-contain"
+                        />
+                      ) : (
+                        <div className="text-center text-gray-500">
+                          <Image className="w-16 h-16 mx-auto mb-2 opacity-50" />
+                          <p className="text-sm">No image generated</p>
+                        </div>
+                      )}
                     </div>
                     <div className="flex gap-2">
-                      <button className="flex-1 btn-retro btn-retro-secondary flex items-center justify-center gap-2">
+                      <a 
+                        href={result.images?.[0]?.url} 
+                        download
+                        className="flex-1 btn-retro btn-retro-secondary flex items-center justify-center gap-2"
+                      >
                         <Download className="w-4 h-4" />
                         <span>Download</span>
-                      </button>
+                      </a>
                       <button 
                         onClick={() => {
                           setResult(null);
@@ -226,9 +248,9 @@ export default function ImageGenerationPage() {
 
                   {/* Metadata */}
                   <div className="bg-shell-800 rounded-lg p-3 text-xs text-gray-500 space-y-1">
-                    <p>Model: <span className="text-gray-300">{result.metadata.model}</span></p>
-                    <p>Generation time: <span className="text-gray-300">{result.metadata.generation_time_ms}ms</span></p>
-                    <p>Seed: <span className="text-gray-300">{result.metadata.seed}</span></p>
+                    <p>Model: <span className="text-gray-300">{result.metadata?.model}</span></p>
+                    <p>Generation time: <span className="text-gray-300">{result.metadata?.generation_time_ms}ms</span></p>
+                    <p>Seed: <span className="text-gray-300">{result.metadata?.seed}</span></p>
                   </div>
                 </div>
               ) : (
