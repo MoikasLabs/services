@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Image, Wand2, RefreshCcw, Download, Loader2, AlertCircle } from 'lucide-react';
+import { Image, Wand2, RefreshCcw, Sparkles, Download, Loader2, AlertCircle } from 'lucide-react';
 import { Navigation } from '../components/Navigation';
 import { X402Payment } from '../components/X402Payment';
 import { useAccount } from 'wagmi';
@@ -12,7 +12,7 @@ const TIERS = [
     name: 'Fast',
     description: 'FLUX Schnell - Sub-second generation for rapid prototyping',
     time: '< 1s',
-    price: '~5¢',
+    price: '~3¢',
     icon: RefreshCcw,
   },
   {
@@ -20,7 +20,7 @@ const TIERS = [
     name: 'Balanced',
     description: 'FLUX Dev - Optimal quality/speed for content creation',
     time: '2-5s',
-    price: '~10¢',
+    price: '~8¢',
     icon: Image,
   },
   {
@@ -28,8 +28,16 @@ const TIERS = [
     name: 'Premium',
     description: 'FLUX Realism - Photorealistic output for professional use',
     time: '3-8s',
-    price: '~15¢',
+    price: '~10¢',
     icon: Wand2,
+  },
+  {
+    id: 'ultra',
+    name: 'Ultra',
+    description: 'NanoBanana Pro - Google SOTA, maximum quality',
+    time: '5-12s',
+    price: '~11¢',
+    icon: Sparkles,
   },
 ];
 
@@ -57,6 +65,19 @@ export default function ImageGenerationPage() {
     // Simulate API call to fal.ai via x402
     setTimeout(() => {
       // Mock result - in production this would be real fal.ai response
+      const modelMap: Record<string, string> = {
+        fast: 'fal-ai/flux/schnell',
+        balanced: 'fal-ai/flux/dev',
+        premium: 'fal-ai/flux-realism',
+        ultra: 'fal-ai/nanobanana/pro',
+      };
+      const timeMap: Record<string, number> = {
+        fast: 800,
+        balanced: 3200,
+        premium: 5500,
+        ultra: 8200,
+      };
+      
       setResult({
         status: 'completed',
         images: [{
@@ -66,9 +87,8 @@ export default function ImageGenerationPage() {
         }],
         metadata: {
           tier: selectedTier,
-          model: selectedTier === 'fast' ? 'fal-ai/flux/schnell' : 
-                 selectedTier === 'balanced' ? 'fal-ai/flux/dev' : 'fal-ai/flux-realism',
-          generation_time_ms: selectedTier === 'fast' ? 800 : selectedTier === 'balanced' ? 3200 : 5500,
+          model: modelMap[selectedTier],
+          generation_time_ms: timeMap[selectedTier],
           seed: Math.floor(Math.random() * 1000000),
         },
         timestamp: new Date().toISOString(),
@@ -120,7 +140,7 @@ export default function ImageGenerationPage() {
               {/* Tier Selection */}
               <div className="mb-4">
                 <label className="block text-sm text-gray-400 mb-3">Quality Tier</label>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-4 gap-3">
                   {TIERS.map((tier) => {
                     const Icon = tier.icon;
                     return (
@@ -242,6 +262,7 @@ export default function ImageGenerationPage() {
                 <li className="flex items-center gap-2">✓ Commercial usage rights included</li>
                 <li className="flex items-center gap-2">✓ Zero prompt/image logging (privacy-first)</li>
                 <li className="flex items-center gap-2">✓ Sub-second generation on Fast tier</li>
+                <li className="flex items-center gap-2">✓ Google SOTA model available (Ultra)</li>
               </ul>
             </div>
           </div>
@@ -252,34 +273,46 @@ export default function ImageGenerationPage() {
               <div className="panel-retro p-6">
                 <h3 className="font-display text-lg text-white mb-4">Model Details & Pricing</h3>
                 
-                <div className="space-y-4">
+                <div className="space-y-3">
                   <div className={`p-3 rounded-lg border ${selectedTier === 'fast' ? 'border-crab-500 bg-crab-600/20' : 'border-shell-700'}`}>
                     <div className="flex justify-between items-center">
                       <p className="text-white font-medium text-sm">Fast — FLUX Schnell</p>
-                      <span className="text-crab-400 text-sm">~5¢</span>
+                      <span className="text-crab-400 text-sm">~3¢</span>
                     </div>
                     <p className="text-xs text-gray-500">1-4 steps, sub-second</p>
+                    <p className="text-xs text-gray-600">Cost: $0.003 + ~3¢ margin</p>
                   </div>
                   
                   <div className={`p-3 rounded-lg border ${selectedTier === 'balanced' ? 'border-crab-500 bg-crab-600/20' : 'border-shell-700'}`}>
                     <div className="flex justify-between items-center">
                       <p className="text-white font-medium text-sm">Balanced — FLUX Dev</p>
-                      <span className="text-crab-400 text-sm">~10¢</span>
+                      <span className="text-crab-400 text-sm">~8¢</span>
                     </div>
                     <p className="text-xs text-gray-500">28 steps, commercial-ready</p>
+                    <p className="text-xs text-gray-600">Cost: $0.025 + ~5¢ margin</p>
                   </div>
                   
                   <div className={`p-3 rounded-lg border ${selectedTier === 'premium' ? 'border-crab-500 bg-crab-600/20' : 'border-shell-700'}`}>
                     <div className="flex justify-between items-center">
                       <p className="text-white font-medium text-sm">Premium — FLUX Realism</p>
-                      <span className="text-crab-400 text-sm">~15¢</span>
+                      <span className="text-crab-400 text-sm">~10¢</span>
                     </div>
                     <p className="text-xs text-gray-500">Photorealistic output</p>
+                    <p className="text-xs text-gray-600">Cost: $0.04 + ~6¢ margin</p>
+                  </div>
+                  
+                  <div className={`p-3 rounded-lg border ${selectedTier === 'ultra' ? 'border-crab-500 bg-crab-600/20' : 'border-shell-700'}`}>
+                    <div className="flex justify-between items-center">
+                      <p className="text-white font-medium text-sm">Ultra — NanoBanana Pro</p>
+                      <span className="text-crab-400 text-sm">~11¢</span>
+                    </div>
+                    <p className="text-xs text-gray-500">Google SOTA, max quality</p>
+                    <p className="text-xs text-gray-600">Cost: $0.06 + ~5¢ margin</p>
                   </div>
                 </div>
                 
                 <p className="text-xs text-gray-500 mt-4">
-                  Cost-based pricing. Fal.ai API cost + small margin.
+                  Competitively priced. Fal.ai API cost + small margin. Cheaper than Midjourney/DALL-E.
                 </p>
               </div>
 
