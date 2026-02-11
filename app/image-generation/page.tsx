@@ -12,6 +12,7 @@ const TIERS = [
     name: 'Fast',
     description: 'FLUX Schnell - Sub-second generation for rapid prototyping',
     time: '< 1s',
+    price: '~5¢',
     icon: RefreshCcw,
   },
   {
@@ -19,6 +20,7 @@ const TIERS = [
     name: 'Balanced',
     description: 'FLUX Dev - Optimal quality/speed for content creation',
     time: '2-5s',
+    price: '~10¢',
     icon: Image,
   },
   {
@@ -26,6 +28,7 @@ const TIERS = [
     name: 'Premium',
     description: 'FLUX Realism - Photorealistic output for professional use',
     time: '3-8s',
+    price: '~15¢',
     icon: Wand2,
   },
 ];
@@ -131,9 +134,12 @@ export default function ImageGenerationPage() {
                             : 'border-shell-700 hover:border-shell-600'
                         }`}
                       >
-                        <div className="flex items-center gap-2 mb-2">
-                          <Icon className="w-4 h-4 text-crab-400" />
-                          <span className="text-white text-sm font-medium">{tier.name}</span>
+                        <div className="flex items-center justify-between mb-1">
+                          <div className="flex items-center gap-2">
+                            <Icon className="w-4 h-4 text-crab-400" />
+                            <span className="text-white text-sm font-medium">{tier.name}</span>
+                          </div>
+                          <span className="text-crab-400 text-xs font-bold">{tier.price}</span>
                         </div>
                         <p className="text-xs text-gray-500">{tier.time}</p>
                       </button>
@@ -244,24 +250,37 @@ export default function ImageGenerationPage() {
           <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-4">
               <div className="panel-retro p-6">
-                <h3 className="font-display text-lg text-white mb-4">Model Details</h3>
+                <h3 className="font-display text-lg text-white mb-4">Model Details & Pricing</h3>
                 
                 <div className="space-y-4">
                   <div className={`p-3 rounded-lg border ${selectedTier === 'fast' ? 'border-crab-500 bg-crab-600/20' : 'border-shell-700'}`}>
-                    <p className="text-white font-medium text-sm">Fast — FLUX Schnell</p>
+                    <div className="flex justify-between items-center">
+                      <p className="text-white font-medium text-sm">Fast — FLUX Schnell</p>
+                      <span className="text-crab-400 text-sm">~5¢</span>
+                    </div>
                     <p className="text-xs text-gray-500">1-4 steps, sub-second</p>
                   </div>
                   
                   <div className={`p-3 rounded-lg border ${selectedTier === 'balanced' ? 'border-crab-500 bg-crab-600/20' : 'border-shell-700'}`}>
-                    <p className="text-white font-medium text-sm">Balanced — FLUX Dev</p>
+                    <div className="flex justify-between items-center">
+                      <p className="text-white font-medium text-sm">Balanced — FLUX Dev</p>
+                      <span className="text-crab-400 text-sm">~10¢</span>
+                    </div>
                     <p className="text-xs text-gray-500">28 steps, commercial-ready</p>
                   </div>
                   
                   <div className={`p-3 rounded-lg border ${selectedTier === 'premium' ? 'border-crab-500 bg-crab-600/20' : 'border-shell-700'}`}>
-                    <p className="text-white font-medium text-sm">Premium — FLUX Realism</p>
+                    <div className="flex justify-between items-center">
+                      <p className="text-white font-medium text-sm">Premium — FLUX Realism</p>
+                      <span className="text-crab-400 text-sm">~15¢</span>
+                    </div>
                     <p className="text-xs text-gray-500">Photorealistic output</p>
                   </div>
                 </div>
+                
+                <p className="text-xs text-gray-500 mt-4">
+                  Cost-based pricing. Fal.ai API cost + small margin.
+                </p>
               </div>
 
               <div className="panel-retro p-4">

@@ -31,7 +31,7 @@ export const SERVICE_PRICING = {
   'ai-research': { usd: 15, tokens: { DRAKIN: 1500000, KOBOLDS: 1500000 } },
   'security-audit': { usd: 25, tokens: { DRAKIN: 2500000, KOBOLDS: 2500000 } },
   'vault-setup': { usd: 15, tokens: { DRAKIN: 1500000, KOBOLDS: 1500000 } },
-  'image-generation': { usd: 20, tokens: { DRAKIN: 2000000, KOBOLDS: 2000000 } },
+  'image-generation': { usd: 0.10, tokens: { DRAKIN: 10000, KOBOLDS: 10000 } }, // ~10¢ cost-based pricing
 };
 
 export const TREASURY_ADDRESS = '0xc406fFf2Ce8b5dce517d03cd3531960eb2F6110d';
