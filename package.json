@@ -6,34 +6,45 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "prepare": "husky"
   },
   "dependencies": {
-    "@openfacilitator/sdk": "^1.0.0",
-    "@rainbow-me/rainbowkit": "^2.2.10",
-    "@tanstack/react-query": "^5.90.20",
-    "@tiptap/extension-placeholder": "^3.19.0",
-    "@tiptap/react": "^3.19.0",
-    "@tiptap/starter-kit": "^3.19.0",
-    "clsx": "^2.1.1",
-    "lucide-react": "^0.563.0",
+    "@fal-ai/client": "1.9.1",
+    "@openfacilitator/sdk": "1.0.0",
+    "@rainbow-me/rainbowkit": "2.2.10",
+    "@tanstack/react-query": "5.90.20",
+    "@tiptap/extension-placeholder": "3.19.0",
+    "@tiptap/react": "3.19.0",
+    "@tiptap/starter-kit": "3.19.0",
+    "clsx": "2.1.1",
+    "lucide-react": "0.563.0",
     "next": "16.1.6",
-    "next-themes": "^0.4.6",
+    "next-themes": "0.4.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "tailwind-merge": "^3.4.0",
-    "viem": "^2.45.1",
-    "wagmi": "^2.19.5",
-    "x402": "^1.1.0"
+    "tailwind-merge": "3.4.0",
+    "viem": "2.45.1",
+    "wagmi": "2.19.5",
+    "x402": "1.1.0"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
+    "@types/node": "20.17.10",
+    "@types/react": "19.0.6",
+    "@types/react-dom": "19.0.5",
+    "autoprefixer": "10.4.19",
+    "eslint": "9.18.0",
     "eslint-config-next": "16.1.6",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "postcss": "8.4.38",
+    "tailwindcss": "3.4.4",
+    "typescript": "5.7.2"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "bash -c 'tsc --noEmit'"
+    ]
   }
 }
