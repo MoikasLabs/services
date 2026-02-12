@@ -29,7 +29,7 @@ export default function SecurityAuditPage() {
         timestamp: new Date().toISOString(),
         summary: {
           totalLines: code.split('\n').length,
-          issuesFound: Math.floor(Math.random() * 3), // 0-2 issues for demo
+          issuesFound: Math.floor(Math.random() * 3),
           severity: 'low',
         },
         findings: [
@@ -64,7 +64,7 @@ export default function SecurityAuditPage() {
             </div>
             <div>
               <h1 className="font-display text-2xl sm:text-3xl text-white">Security Audit</h1>
-              <p className="text-gray-400 text-sm">Smart contract security scan with kobold-scan</p>
+              <p className="text-gray-400 text-sm">Smart contract security scan with kobold-scan • $25.00</p>
             </div>
           </div>
         </div>
@@ -85,12 +85,7 @@ export default function SecurityAuditPage() {
               <textarea
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                placeholder="// Paste your smart contract code here...
-pragma solidity ^0.8.0;
-
-contract MyContract {
-  // Your code here
-}"
+                placeholder="// Paste your smart contract code here...\npragma solidity ^0.8.0;\n\ncontract MyContract {\n  // Your code here\n}"
                 className="w-full h-64 bg-shell-900 border border-shell-700 rounded-lg p-4 font-mono text-sm text-gray-300 focus:border-crab-500 focus:outline-none resize-none"
                 disabled={isScanning}
               />
@@ -188,7 +183,13 @@ contract MyContract {
                 <div className="p-4 bg-shell-800 rounded-lg mb-6">
                   <p className="text-sm text-gray-400 mb-2">Service:</p>
                   <p className="text-white font-medium">Smart Contract Audit</p>
-                  <p className="text-xs text-gray-500 mt-1">kobold-scan analysis</p>
+                  <p className="text-xs text-gray-500 mt-1">$25.00 flat rate</p>
+                </div>
+
+                <div className="space-y-3 mb-4">
+                  <p className="text-xs text-gray-500">
+                    Select token to see live pricing with 10% discount
+                  </p>
                 </div>
 
                 {!isConnected ? (
@@ -204,7 +205,6 @@ contract MyContract {
                   <X402Payment
                     service="security-audit"
                     onSuccess={handlePaymentSuccess}
-                    buttonText="Pay & Scan"
                   />
                 )}
               </div>

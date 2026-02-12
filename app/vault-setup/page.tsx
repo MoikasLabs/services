@@ -59,7 +59,7 @@ sops -d secrets/config.yaml`;
             </div>
             <div>
               <h1 className="font-display text-2xl sm:text-3xl text-white">Secret Vault Setup</h1>
-              <p className="text-gray-400 text-sm">SOPS + Age encrypted secrets management</p>
+              <p className="text-gray-400 text-sm">SOPS + Age encrypted secrets management • $15.00</p>
             </div>
           </div>
         </div>
@@ -164,7 +164,13 @@ sops -d secrets/config.yaml`;
                 <div className="p-4 bg-shell-800 rounded-lg mb-6">
                   <p className="text-sm text-gray-400 mb-2">Service:</p>
                   <p className="text-white font-medium">SOPS + Age Setup</p>
-                  <p className="text-xs text-gray-500 mt-1">Complete guide with scripts</p>
+                  <p className="text-xs text-gray-500 mt-1">One-time purchase • $15.00</p>
+                </div>
+
+                <div className="space-y-3 mb-4">
+                  <p className="text-xs text-gray-500">
+                    Select token to see live pricing with 10% discount
+                  </p>
                 </div>
 
                 {!isConnected ? (
@@ -180,7 +186,6 @@ sops -d secrets/config.yaml`;
                   <X402Payment
                     service="vault-setup"
                     onSuccess={handlePaymentSuccess}
-                    buttonText="Get Access"
                   />
                 )}
               </div>
